@@ -1,0 +1,21 @@
+{% if error_message %}
+    <strong>{{ error_message }}</strong>
+{% endif %}
+
+<h2>{{ movie.actor_movie }}</h2>
+<h3>{{ movie.genre }}</h3>
+<img src="{{ movie.logo }}" width="200" height="200" />
+
+<form  id="submit_form" action="{% url 'myapp:favorite' movie.id %}" method="post">
+    {% csrf_token %}
+    {% for song in movie.songs_set.all %}
+        <input type="radio" name="song" id="song{{ forloop.counter }}" value="{{ song.id }}" />
+        <label for="song{{ forloop.counter }}">
+            {{ song.song_name }}
+            {% if song.is_favorite %}
+                <img src="C:/Users/Aalamgeer/Desktop/star.png" width="20" height="20">
+            {% endif %}
+        </label><br>
+    {% endfor %}
+        <input type="submit" name="submit" id="submit" value="Sabmit">
+</form >
